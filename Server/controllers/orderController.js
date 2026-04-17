@@ -123,17 +123,22 @@ export const stripewebhooks=async (request,response)=>{
     const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY)
 
     const sig=request.headers["stripe-signature"]
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || process.env.STRIP_WEBHOOK_SECRET
     let event;
+
+    if (!webhookSecret) {
+        return response.status(500).send('Stripe webhook secret is not configured.')
+    }
 
     try{
         event=stripeInstance.webhooks.constructEvent(
             request.body,
             sig,
-            process.env.STRIPE_WEBHOOK_SECRET
+            webhookSecret
         )
     }
     catch(error){
-        response.status(400).send(`Webhook Error: ${error.message}`)
+        return response.status(400).send(`Webhook Error: ${error.message}`)
     }
 
     //handle event
@@ -143,7 +148,7 @@ export const stripewebhooks=async (request,response)=>{
             const paymentIntentId=paymentIntent.id 
 
             //getting Session Metadata
-            const session=await stripeInstance.checkout.session.list({
+            const session=await stripeInstance.checkout.sessions.list({
                 payment_intent:paymentIntentId
             })
 
