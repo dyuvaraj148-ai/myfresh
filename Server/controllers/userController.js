@@ -21,9 +21,9 @@ export const register=async(req,res)=>{
 
         const token=jwt.sign({userId:user._id},process.env.JWT_SECRET,{expiresIn:'7d'})
         res.cookie('token',token,{
-            httpOnly:true, //prevent js to access cookie
-            secure:process.env.NODE_ENV==="production", //use secure cookies in prosuction
-            sameSite:'lax',//CSRF cookie
+            httpOnly:true,
+            secure:true,
+            sameSite:'none',
             maxAge:7*24*60*60*1000
         })
 
@@ -65,9 +65,9 @@ export const login=async(req,res)=>{
 
         const token=jwt.sign({userId: user._id},process.env.JWT_SECRET,{expiresIn:'7d'})
         res.cookie('token',token,{
-            httpOnly:true, //prevent js to access cookie
-            secure:process.env.NODE_ENV==="production", //use secure cookies in prosuction
-            sameSite:'lax',//CSRF cookie
+            httpOnly:true,
+            secure:true,
+            sameSite:'none',
             maxAge:7*24*60*60*1000
         })
 
@@ -104,8 +104,8 @@ export const logout=async (req,res)=>{
     try{
         res.clearCookie('token',{
             httpOnly:true,
-            secure:process.env.NODE_ENV==='production',
-            sameSite:'lax'
+            secure:true,
+            sameSite:'none'
         })
         return res.json({success:true,message:"logged out"})
     }
