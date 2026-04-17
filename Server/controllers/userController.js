@@ -19,23 +19,10 @@ export const register=async(req,res)=>{
         const hashedPassword=await bcrypt.hash(password,10)
         const user= await User.create({name,email,password: hashedPassword})
 
-        const token=jwt.sign({userId:user._id},process.env.JWT_SECRET,{expiresIn:'7d'})
-        res.cookie('token',token,{
-            httpOnly:true,
-            secure:true,
-            sameSite:'none',
-            maxAge:7*24*60*60*1000
-        })
-
         return res.json({
-        success: true,
-        user: {
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        cartItems: user.cartItems
-    }
-    })
+            success: true,
+            message: "Registration successful! Please login to continue."
+        })
 
     }
     catch(err){
