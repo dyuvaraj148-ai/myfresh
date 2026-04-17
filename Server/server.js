@@ -18,7 +18,7 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 // allowed origins
-const allowedOrigins = ['http://localhost:5173'];
+const allowedOrigins = ['http://localhost:5173',"https://myfresh.vercel.app"];
 app.post('/stripe',express.raw({type:'application/json'}),stripewebhooks)
 
 // middleware
