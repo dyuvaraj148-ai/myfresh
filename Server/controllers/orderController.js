@@ -197,14 +197,33 @@ export const getUserOrder=async(req,res)=>{
 }
 
 //get All orders (for seller/admin: /api/order/seller)
-export const getAllOrder=async(req,res)=>{
-    try{
-        const orders=await Order.find({
-            $or:[{paymentType:"COD"},{isPaid:true}]
-        }).populate("items.product address").sort({createdAt:-1})
-        res.json({success:true,orders})
-    }
-    catch(error){
-        return res.json({success:false,message:error.message})
-    }
-}
+export const getAllOrder = async (req, res) => {
+  try {
+    const orders = await Order.find({
+      $or: [{ paymentType: "COD" }, { isPaid: true }]
+    })
+      .populate({
+        path: "items.product",
+        model: "Product",
+        select: "name price images"
+      })
+      .populate("address")
+      .sort({ createdAt: -1 });
+
+    // ❌ Remove orders where ANY product is null
+    const filteredOrders = orders.filter(order =>
+      order.items.every(item => item.product !== null)
+    );
+
+    res.json({
+      success: true,
+      orders: filteredOrders
+    });
+
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message
+    });
+  }
+};
