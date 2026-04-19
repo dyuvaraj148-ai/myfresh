@@ -49,6 +49,7 @@ MyFresh is a full-stack e-commerce web application where users can browse produc
 ---
 
 ## 📂 Project Structure
+
 myfresh/
 │── client/          # Frontend (React)
 │── server/          # Backend root
