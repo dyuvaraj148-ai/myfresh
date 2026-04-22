@@ -13,7 +13,6 @@ export const sellerlogin=async(req,res)=>{
                 httpOnly:true,
                 secure:true,
                 sameSite:'none',
-                path:'/',
                 maxAge:7*24*60*60*1000
             })
             return res.json({success:true,message:"Logged In"})
@@ -49,8 +48,7 @@ export const sellerlogout=async (req,res)=>{
         res.clearCookie('sellerToken',{
             httpOnly:true,
             secure:true,
-            sameSite:'none',
-            path: '/'
+            sameSite:'none'
         })
         return res.json({success:true,message:"logged out"})
     }
