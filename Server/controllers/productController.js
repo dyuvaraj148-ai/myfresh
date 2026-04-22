@@ -27,7 +27,7 @@ export const addProduct=async(req,res)=>{
 //Get product : /api/product/list
 export const productList=async(req,res)=>{
     try{
-        const products=await Product.find({inStock:true})
+        const products=await Product.find()
         return  res.json({success:true,products})
     }
     catch(error){
