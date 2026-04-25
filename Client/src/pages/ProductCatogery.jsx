@@ -9,8 +9,9 @@ const ProductCatogery = () => {
     const {products}=useAppContext()
     const {category}=useParams()
 
-    const searchCategory=categories.find((item)=>item.path.toLowerCase()===category)
-    const fillteredProducts=products.filter((product)=>product.category.toLowerCase()===category)
+    const searchCategory=categories.find((item)=>item.path.toLowerCase()===category && item.inStock)
+    const fillteredProducts=products.filter((product)=>product.category.toLowerCase()===category && product.inStock)
+    
 
     return (
     <div className='mt-16'>
