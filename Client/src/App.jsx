@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar"
 import Home from "./pages/Home"
 import Footer from "./components/Footer"
 import Login from "./components/Login"
+import DemoBanner from "./components/DemoBanner"
 import { useAppContext } from "./context/AppContext"
 import AllProducts from "./pages/AllProducts"
 import ProductCatogery from "./pages/ProductCatogery"
@@ -27,6 +28,7 @@ function App() {
 
   return(
     <div className="text-default min-h-screen text-gray-700 bg-white">
+      <DemoBanner/>
       {isSellerPath?null:<Navbar/>}
       {showUserLogin?<Login/>:null}
       <Toaster/>
