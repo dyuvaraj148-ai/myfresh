@@ -6,7 +6,7 @@ const sellerRouter=express.Router()
 
 sellerRouter.post('/login',sellerlogin)
 sellerRouter.get('/is-auth',authSeller,sellerAuth)
-sellerRouter.get('/logout',authSeller,sellerlogout)
+sellerRouter.get('/logout',sellerlogout)
 
 
 export default sellerRouter
